@@ -1,2 +1,2 @@
-#!/ban/bash
+#!/ban/bash                                                                                                                             
 cp -un *.html ../
