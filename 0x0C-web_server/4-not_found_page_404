@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# redirecting
+# 404 page 
 
 sudo apt-get update
 sudo apt-get install -y nginx
@@ -9,6 +9,13 @@ echo "Hello world!" | sudo tee /var/ww/html/index.html
 str_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/aimron001 permanent;"
 
 sudo sed -i "s/server_name_;/$str_for_replacement/" /etc/nginx/sites-enabled/default
+
+# creating the 404 page
+echo "Ceci n'est pas une page" | sudo tee /var/ww/html/404.html
+
+str_for_replacement="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+
+sudo sed -i "s/listen 80 default_server;/$str_for_replacement/" /etc/nginx/sites-enabled/default
 
 # restarting nginx
 sudo service nginx restart
