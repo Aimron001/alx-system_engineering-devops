@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# configures a new Ubuntu machin  with requirements given
+
+# Installing nginx on the machine
+apt-get -y update
+sudo apt install nginx -y
+
+# Add custom response header
+HOST_NAME=$(hostname)
+
+HEADER="\\\n\tadd_header X-Served-By $HOST_NAME;\n"
+
+FIND=$(grep "X-Server-by" /etc/nginx/sites-available/default)
+if [[ -z $FIND ]]; then
+    sed -i "23i $HEADER" /etc/nginx/sites-available/default
+fi
+service nginx restart
