@@ -2,20 +2,20 @@
 # configures a load balancer
 
 # Installing HAproxy on a server
-apt-get -y update
-apt-get -y install haproxy=1.6.\*
+sudo apt-get update
+sudo apt install haproxy
 
 # Configure haproxy configuration file
 echo '
-frontend sammykingx.tech
+frontend ai-mron.tech
         bind 0:80
-        default_backend web_servers
+        default_backend my_servers
 
-backend web_servers
+backend my_servers
         balance roundrobin
-        server 64820-web-01 100.26.152.157:80
-        server 64820-web-02 52.86.102.6:80
-' >> /etc/haproxy/haproxy.cfg
+        server 64820-web-01 35.153.52.126:80
+        server 64820-web-02 100.25.139.140:80
+' | sudo tee -a /etc/haproxy/haproxy.cfg
 
 # Restart HAproxy
-service haproxy restart
+sudo service haproxy restart
