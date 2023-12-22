@@ -10,14 +10,17 @@ import sys
 def number_of_subscribers(subreddit):
     """queries the Reddit API and returns the number of
     subscribers for a given subreddit"""
-
     client_id = 'beIUiJlOBKOUF_WAKMba8A'
     client_secret = '9huuf_Qz3J00w9IiScHyBd2wFY-7fg'
-
     url = 'http://www.reddit.com/r/{}/about.json'.format(subreddit)
+    auth = 'Basic {}'.format(
+        base64.b64encode('{}:{}'.format(client_id, client_secret).encode()
+                         ).decode()
+    )
+
     headers = {
             'User-Agent': 'An alx api advanced  project/1.0',
-            'Authorization': f'Basic {base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()}'
+            'Authorization': auth
         }
 
     response = requests.get(url, headers=headers)
